@@ -41,7 +41,7 @@ public class GestionarArchivos
                         //System.out.println(archivosCarpeta[j].getAbsolutePath());
                         cont++;
                         
-                        boolean flag = leerArchivo(archivosCarpeta[j], "Whoops");
+                        boolean flag = leerArchivo(archivosCarpeta[j], "iniciar");
                         if(flag)
                         {
                             listaDirs.add(archivosCarpeta[j].getAbsolutePath());
@@ -51,6 +51,9 @@ public class GestionarArchivos
             }
         }
         
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
         System.out.println("");
         if(listaDirs.isEmpty())
         {
@@ -73,7 +76,7 @@ public class GestionarArchivos
         System.out.println("Leyendo archivo " +archivo.getAbsolutePath());
         
         String cadena;
-        ArrayList <String> lineas = new ArrayList <String>();
+        ArrayList <String> lineas = new ArrayList <>();
         try 
         {
             FileReader lector = new FileReader(archivo);
