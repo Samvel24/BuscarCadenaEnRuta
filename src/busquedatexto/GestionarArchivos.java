@@ -17,14 +17,15 @@ public class GestionarArchivos
     {
         // constructor
 
-        lista = new ArrayList <File>();
+        lista = new ArrayList <>();
     }
     
     public void inicio()
     {
-        File f = new File("C:\\www\\ito-jobs.localhost\\");
+        File f = new File("C:\\Users\\samve\\Documentos"); // Directorio a buscar
         arbol(f);
         
+        String extension = ".txt"; // extension de archivos en los que se desea buscar
         ArrayList <String> listaDirs = new ArrayList<>();
         int cont = 0;
         for(int i = 0; i < lista.size(); i++)
@@ -36,12 +37,13 @@ public class GestionarArchivos
                 
                 for(int j = 0; j < archivosCarpeta.length; j++)
                 {
-                    if(archivosCarpeta[j].getAbsolutePath().contains(".php"))
+                    if(archivosCarpeta[j].getAbsolutePath().contains(extension))
                     {
                         //System.out.println(archivosCarpeta[j].getAbsolutePath());
                         cont++;
                         
-                        boolean flag = leerArchivo(archivosCarpeta[j], "iniciar");
+                        // el segundo argumento es la cadena que se desea encontrar:
+                        boolean flag = leerArchivo(archivosCarpeta[j], "new Mat()");
                         if(flag)
                         {
                             listaDirs.add(archivosCarpeta[j].getAbsolutePath());
@@ -67,7 +69,7 @@ public class GestionarArchivos
             }
         }
         
-        System.out.println("Total de archivos .php: " +cont);
+        System.out.println("Total de archivos con extension " +extension +": " +cont);
     }
     
     private boolean leerArchivo(File archivo, String busqueda)
