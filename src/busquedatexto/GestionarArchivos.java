@@ -22,12 +22,13 @@ public class GestionarArchivos
     
     public void inicio()
     {
-        File f = new File("C:\\Users\\samve\\Documentos"); // Directorio a buscar
+        File f = new File("C:\\www\\ito-jobs.localhost\\"); // Directorio a buscar
         arbol(f);
         
-        String extension = ".txt"; // extension de archivos en los que se desea buscar
+        String extension = ".php"; // extension de archivos en los que se desea buscar
         ArrayList <String> listaDirs = new ArrayList<>();
         int cont = 0;
+        System.out.println("Ruta principal de busqueda:" +f.getAbsolutePath());
         for(int i = 0; i < lista.size(); i++)
         {
             String ruta = lista.get(i).getAbsolutePath();
@@ -43,7 +44,7 @@ public class GestionarArchivos
                         cont++;
                         
                         // el segundo argumento es la cadena que se desea encontrar:
-                        boolean flag = leerArchivo(archivosCarpeta[j], "new Mat()");
+                        boolean flag = leerArchivo(archivosCarpeta[j], "guest");
                         if(flag)
                         {
                             listaDirs.add(archivosCarpeta[j].getAbsolutePath());
