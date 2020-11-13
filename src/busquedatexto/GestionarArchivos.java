@@ -73,6 +73,87 @@ public class GestionarArchivos
         System.out.println("Total de archivos con extension " +extension +": " +cont);
     }
     
+    /*
+    Nota: al leer las lineas de los archivos de la sesion de opera en la consola
+    de netbeans se copian pero al pegar se pegan resultados extraños, por tanto no
+    es recomedable copiarlos desde esta consola sino buscarlos en el historial de
+    opera o directamente en el archivo de sesion, este programa solo sirve para 
+    orientarme y no buscar linea por linea en todo el archivo de sesion que puede 
+    ser muy complicado de leer.
+    */
+    public void buscarEnArchivoIndividual()
+    {
+        String directorio = "C:\\Users\\samve\\AppData\\Roaming\\Opera Software\\Opera Stable\\Sessions\\";
+        String archivo = "Session_13249154130313986";
+        File f = new File(directorio +archivo); // Directorio a buscar
+        
+        List[] lista = leerArchivo2(f, "https"); // (archivo, cadena a buscar)
+        
+        ArrayList <Integer> numLineas = (ArrayList<Integer>)lista[0];
+        ArrayList <String> lineas = (ArrayList<String>)lista[1];
+        
+        if(!lineas.isEmpty()) // si el arraylist no esta vacio
+        {
+            System.out.println("Num de lineas encontradas con la cadena deseada: " +numLineas.size());
+            for(int i = 0; i < numLineas.size(); i++)
+            {
+                System.out.println("[Linea (" +numLineas.get(i) +"): " +lineas.get(i) +"]");
+            }
+        }
+        else
+        {
+            System.out.println("No se encontro la cadena deseada");
+        }
+    }
+    
+    // funcion que se llama desde buscarEnArchivoIndividual()
+    private List[] leerArchivo2(File archivo, String busqueda)
+    {
+        System.out.println("Leyendo archivo " +archivo.getAbsolutePath());
+        
+        String cadena;
+        ArrayList <String> lineasArchivo = new ArrayList<>(); // lineas del archivo (Strings)
+        ArrayList <String> lineasEncontradas = new ArrayList<>(); // numeros de lineas en que se encontro cadena
+        ArrayList <Integer> numLineas = new ArrayList<>();
+        try 
+        {
+            FileReader lector = new FileReader(archivo);
+            BufferedReader lectura = new BufferedReader(lector);          
+          
+            cadena = lectura.readLine(); 
+            
+            while(cadena != null)
+            {
+                cadena = lectura.readLine();
+                
+                if(cadena != null)
+                {
+                    lineasArchivo.add(cadena);
+                }
+            }   
+        } 
+        catch (FileNotFoundException ex) 
+        {
+           System.err.println("Error: " +ex);    
+        }
+        catch (IOException ex) 
+        {
+            System.err.println("Error: " +ex);    
+        }
+        
+        System.out.println("Total de lineas en el archivo: " +lineasArchivo.size());
+        for(int i = 0; i < lineasArchivo.size(); i++)
+        {   
+            if(lineasArchivo.get(i).contains(busqueda))
+            {
+                numLineas.add(i);
+                lineasEncontradas.add(lineasArchivo.get(i));
+            }
+        }
+        
+        return new List[]{numLineas, lineasEncontradas};
+    }
+    
     private boolean leerArchivo(File archivo, String busqueda)
     {
         //File archivo = new File("C:\\www\\ito-jobs.localhost\\arbol.doc");
@@ -114,6 +195,7 @@ public class GestionarArchivos
                 bandera = true;
             }
         }
+        
         return bandera;
     }
     
