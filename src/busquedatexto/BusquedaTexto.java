@@ -6,7 +6,7 @@ public class BusquedaTexto
     public static void main(String[] args) 
     {
         GestionarArchivos g = new GestionarArchivos();
-        g.buscarEnArchivoIndividual();
+        g.buscarEnCarpeta();
         
         /*StringBuilder texto3 = new StringBuilder("Otra prueba");
         texto3.append(" mas");

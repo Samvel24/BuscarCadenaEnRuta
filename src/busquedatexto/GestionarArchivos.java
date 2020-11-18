@@ -16,16 +16,16 @@ public class GestionarArchivos
     public GestionarArchivos()
     {
         // constructor
-
-        lista = new ArrayList <>();
+        // esta lista contiene la ruta de todas las carpetas pertenecientes a un directorio raiz:
+        lista = new ArrayList <>(); 
     }
     
     public void inicio()
     {
-        File f = new File("C:\\www\\ito-jobs.localhost\\"); // Directorio a buscar
+        File f = new File("C:\\Users\\samve\\Documentos\\Opera_PagGuardadas\\"); // Directorio a buscar
         arbol(f);
-        
-        String extension = ".php"; // extension de archivos en los que se desea buscar
+       
+        String extension = ".txt"; // extension de archivos en los que se desea buscar
         ArrayList <String> listaDirs = new ArrayList<>();
         int cont = 0;
         System.out.println("Ruta principal de busqueda:" +f.getAbsolutePath());
@@ -44,7 +44,7 @@ public class GestionarArchivos
                         cont++;
                         
                         // el segundo argumento es la cadena que se desea encontrar:
-                        boolean flag = leerArchivo(archivosCarpeta[j], "guest");
+                        boolean flag = leerArchivo(archivosCarpeta[j], "break");
                         if(flag)
                         {
                             listaDirs.add(archivosCarpeta[j].getAbsolutePath());
@@ -71,6 +71,36 @@ public class GestionarArchivos
         }
         
         System.out.println("Total de archivos con extension " +extension +": " +cont);
+    }
+    
+    /*
+    Buscamos en todos los archivos de una sola carpeta que contenga unicamente
+    archivos y ninguna carpeta
+    */
+    public void buscarEnCarpeta()
+    {
+        File f = new File("C:\\Users\\samve\\Documentos\\Opera_PagGuardadas\\"); // Directorio a buscar
+        
+        System.out.println("Ruta principal de busqueda:" +f.getAbsolutePath());
+        for(File file : f.listFiles())
+        {
+            if(file.isFile()) // si es archivo (no carpetas)
+            {
+                boolean encontrado = leerArchivo(file, "break"); // (archivo, cadena a buscar)
+
+                if(encontrado) // si se encontro la cadena
+                {
+                    // Imprimimos ruta de archivo en el que se encontro la cadena
+                    System.out.println("Encontrado en: " +file.getAbsolutePath());
+                    System.out.println("");
+                }
+                else
+                {
+                    System.out.println("No se encontro la cadena deseada");
+                    System.out.println("");
+                }
+            }
+        }
     }
     
     /*
@@ -203,7 +233,7 @@ public class GestionarArchivos
     {
         //System.out.println("Arbol: " +file.getAbsolutePath());
         for(File f : file.listFiles())
-        {
+        {   
             if(f.isDirectory())
             {
                 lista.add(new File(f.getAbsolutePath()));
