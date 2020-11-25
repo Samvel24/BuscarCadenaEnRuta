@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,13 +23,22 @@ public class GestionarArchivos
     
     public void inicio()
     {
-        File f = new File("C:\\Users\\samve\\Documentos\\Opera_PagGuardadas\\"); // Directorio a buscar
+        File f = new File("C:\\www\\contactos.adpuntomx.localhost\\"); // Directorio a buscar
         arbol(f);
        
-        String extension = ".txt"; // extension de archivos en los que se desea buscar
+        // colocar "no-extension" en la siguiente variable para buscar en todos los archivos
+        // colocar ".php" por ejemplo, en la siguiente variable para buscar solo en esa extension
+        String extension = "no-extension"; // extension de archivos en los que se desea buscar
+        String busqueda = "samve"; // texto que se desea buscar en los archivos
         ArrayList <String> listaDirs = new ArrayList<>();
         int cont = 0;
         System.out.println("Ruta principal de busqueda:" +f.getAbsolutePath());
+        
+        if(extension.equals("no-extension"))
+        {
+            System.out.println("Buscando en todos los archivos (no se especifico extension)");
+        }
+        
         for(int i = 0; i < lista.size(); i++)
         {
             String ruta = lista.get(i).getAbsolutePath();
@@ -37,17 +47,35 @@ public class GestionarArchivos
                 File[] archivosCarpeta = lista.get(i).listFiles();
                 
                 for(int j = 0; j < archivosCarpeta.length; j++)
-                {
-                    if(archivosCarpeta[j].getAbsolutePath().contains(extension))
-                    {
-                        //System.out.println(archivosCarpeta[j].getAbsolutePath());
-                        cont++;
-                        
-                        // el segundo argumento es la cadena que se desea encontrar:
-                        boolean flag = leerArchivo(archivosCarpeta[j], "break");
-                        if(flag)
+                {   
+                    if(extension.equals("no-extension"))
+                    {   
+                        if(archivosCarpeta[j].isFile())
                         {
-                            listaDirs.add(archivosCarpeta[j].getAbsolutePath());
+                            //System.out.println(archivosCarpeta[j].getAbsolutePath());
+                            cont++;
+
+                            // el segundo argumento es la cadena que se desea encontrar:
+                            boolean flag = leerArchivo(archivosCarpeta[j], busqueda);
+                            if(flag)
+                            {
+                                listaDirs.add(archivosCarpeta[j].getAbsolutePath());
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if(archivosCarpeta[j].getAbsolutePath().contains(extension))
+                        {
+                            //System.out.println(archivosCarpeta[j].getAbsolutePath());
+                            cont++;
+
+                            // el segundo argumento es la cadena que se desea encontrar:
+                            boolean flag = leerArchivo(archivosCarpeta[j], busqueda);
+                            if(flag)
+                            {
+                                listaDirs.add(archivosCarpeta[j].getAbsolutePath());
+                            }
                         }
                     }
                 }
@@ -70,7 +98,14 @@ public class GestionarArchivos
             }
         }
         
-        System.out.println("Total de archivos con extension " +extension +": " +cont);
+        if(!extension.equals("no-extension"))
+        {
+            System.out.println("Total de archivos con extension " +extension +": " +cont);
+        }
+        else
+        {
+            System.out.println("Total de archivos leidos: " +cont);
+        }
     }
     
     /*
