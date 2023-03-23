@@ -12,7 +12,7 @@ import java.util.List;
 
 public class GestionarArchivos 
 {
-    private ArrayList <File> lista;
+    private ArrayList <File> lista; // Campo de clase de tipo ArrayaList (Estructura de datos)
     
     public GestionarArchivos()
     {
